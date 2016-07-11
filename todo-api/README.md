@@ -2,9 +2,9 @@
 
 To run this application we have to execute app.py
 
-chmod a+x app.py
-
-./app.py
+$ flask/bin/pip install flask
+$ chmod a+x app.py
+$ ./app.py
 
 now you can launch your web browser and type http://localhost:5000 to see this tiny application in action.
 
