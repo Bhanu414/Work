@@ -1,7 +1,13 @@
 #!flask/bin/python
 from flask import Flask, jsonify, abort, make_response, request, url_for
+# from flask_httpauth import HTTPBasicAuth
+from flask_httpauth import HTTPDigestAuth
+# from functool import warps
 
 app = Flask(__name__)
+# auth = HTTPBasicAuth()
+app.config['SECRET_KEY'] = 'secret key here'
+auth = HTTPDigestAuth()
 
 tasks = [
 
@@ -16,18 +22,42 @@ tasks = [
         'title': u'Learn Python',
         'description': u'Need to find a good Python tutorial on the web', 
         'done': False
+    },
+    {
+        'id': 3,
+        'title': u'checking',
+        'description': u'checking new data', 
+        'done': True
     }
 ]
 
+users= {
+	"bhanu" : "bhanu",
+	"kumar" : "python"
+}
+
+@auth.get_password
+def get_password(username):
+	if username in users:
+		return users.get(username)
+	return None
+
+@auth.error_handler
+def unauthorised():
+	return make_response(jsonify({'error':'you are Unauthorised'}),401)
+
 @app.route('/')
+@auth.login_required
 def index():
-    return "hello follow <br> /todo/api/tasks <br> /todo/api/tasks/int:task_id"
+    return "hello, %s follow <br> /todo/api/tasks <br> /todo/api/tasks/int:task_id" %auth.username()
 
 @app.route('/todo/api/tasks',methods=['GET'])
+@auth.login_required
 def get_tasks():
     return jsonify({'tasks':[make_public_task(task) for task in tasks]})
 
 @app.route('/todo/api/tasks/<int:task_id>')
+@auth.login_required
 def get_task(task_id):
     task= [task for task in tasks if task['id'] == task_id]
     if len(task) == 0:
@@ -39,6 +69,7 @@ def not_found(error):
 	return make_response(jsonify({'error': 'no url'}),404)
 
 @app.route('/todo/api/tasks',methods=['POST'])
+@auth.login_required
 def create_task():
 	if not request.json or not 'title' in request.json:
 		abort(400)
@@ -52,6 +83,7 @@ def create_task():
 	return jsonify({'task': task}), 201
 
 @app.route('/todo/api/tasks/<int:task_id>', methods =['PUT'])
+@auth.login_required
 def update_task(task_id):
 	task = [task for task in tasks if task['id'] == task_id]
 	if len(task) == 0:
@@ -70,6 +102,7 @@ def update_task(task_id):
 	return jsonify({'task':task[0]})
 
 @app.route('/todo/api/tasks/<int:task_id>',methods=['DELETE'])
+@auth.login_required
 def remove_task(task_id):
 	task = [task for task in tasks if task['id'] == task_id]
 	if len(task) == 0:
