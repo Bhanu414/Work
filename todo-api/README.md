@@ -23,3 +23,7 @@ for authorisation :
 
 bhanu:bhanu
 kumar:python
+
+
+
+Reference: http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
