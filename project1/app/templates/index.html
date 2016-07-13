@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% if title %}
+	<title>{{title}}</title>
+	{% else %}
+	<title>Welcome</title>
+	{% endif %}
+</head>
+<body>
+	<h1>hello {{user.name}} welcome to my page</h1>
+		{% for team in teams %}
+		<div>
+			<p>{{ team.person.name }} with age {{ team.age }} </p>
+		</div>
+		{% endfor %}
+
+</body>
+</html>
