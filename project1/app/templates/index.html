@@ -1,12 +1,11 @@
+<!-- extend base layout -->
 {% extends "base.html" %}
 
 {% block content %}
-
-	<h1>hello, {{user.name}} welcome to my page</h1>
-		{% for team in teams %}
-		<div>
-			<p>{{ team.person.name }} with age {{ team.age }} </p>
-		</div>
-		{% endfor %}
-
+    <h1>Hi, {{ user.nickname }}!</h1>
+    {% for post in posts %}
+    <p>
+      {{ post.author.nickname }} says: <b>{{ post.body }}</b>
+    </p>
+    {% endfor %}
 {% endblock %}

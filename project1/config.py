@@ -1,3 +1,6 @@
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 WTF_CSRF_ENABLE = True
 SECRET_KEY = 'haha-bobby'
 
@@ -9,9 +12,6 @@ OPENID_PROVIDERS = [
 	{'name':'Flickr','url':'http://www.flickr.com/<username>'},
 	{'name':'MyOpenID','url':'http://www.myopenid.com'}]
 
-
-import os
-basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///'+ os.path.join(basedir, 'app.db')
