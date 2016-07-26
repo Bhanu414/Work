@@ -6,15 +6,15 @@
     <title>blog</title>
     {% endif %}
   </head>
-  <body>
-    <div style="text-align:left">Microblog:
+  <body style="color:green; background:lightblue">
+    <div style="text-align:left"> <h2> Microblog:</h2>
     <div style="text-align:right">
-        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('index') }}" style="color:blue">Home</a>
         {% if g.user.is_authenticated %}
         | <a href="{{url_for('user',nickname=g.user.nickname)}}"> Your profile </a>
         | <a href="{{ url_for('logout') }}">Logout</a>
         {% endif %}
-    </div>
+        </div>
     </div>
     <hr>
     {% with messages = get_flashed_messages() %}
