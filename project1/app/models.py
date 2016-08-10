@@ -21,17 +21,31 @@ class User(db.Model):
     def is_anonymous(self):
         return False
 
+
     def get_id(self):
         try:
             return unicode(self.id)  # python 2
         except NameError:
             return str(self.id)  # python 3
 
+
     def __repr__(self):
         return '<User %r>' % (self.nickname)
 
     def avatar (self,size):
         return 'https://s.gravatar.com/avatar/36811e9f80f570e2f9c5778dffb5438c?s=80%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(),size)
+
+    @staticmethod
+    def make_unique_nickname(nickname):
+        if User.query.filter_by(nickname=nickname).first() is None:
+            return nickname
+        version = 2
+        while True:
+            new_nickname = nickname + str(version)
+            if User.query.filter_by(nickname=new_nickname).first() is None:
+                break
+            version += 1
+        return new_nickname
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
