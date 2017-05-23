@@ -18,3 +18,12 @@ If you are on Windows and use the Cygwin version of curl from bash then the abov
 curl -i -H "Content-Type: application/json" -X POST -d "{"""title""":"""Read a book"""}" http://localhost:5000/todo/api/tasks
 
 TO update : curl -i -H "Content-Type: application/json" -X PUT -d '{"done":true}' http://localhost:5000/todo/api/tasks/<int:task_id>
+
+for authorisation :
+
+bhanu:bhanu
+kumar:python
+
+
+
+Reference: http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask
